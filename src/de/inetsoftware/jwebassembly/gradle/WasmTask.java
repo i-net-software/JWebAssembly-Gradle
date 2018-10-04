@@ -31,25 +31,27 @@ import org.gradle.api.tasks.bundling.AbstractArchiveTask;
  */
 public class WasmTask extends AbstractArchiveTask {
 
-    private static Class<?> jWebAssemblyClass;
+    private boolean      debugNames;
 
-    private boolean         debugNames;
+    private String       compilerVersion = "+";
 
-    private String          compilerVersion = "+";
-
-    private OutputFormat    format = OutputFormat.Binary;
+    private OutputFormat format          = OutputFormat.Binary;
 
     /**
      * Get the JWasmAssembler compiler version.
+     * 
      * @return the current version
      */
+    @Input
     public String getCompilerVersion() {
         return compilerVersion;
     }
 
     /**
      * Set the JWasmAssembler compiler version.
-     * @param version the new version
+     * 
+     * @param version
+     *            the new version
      */
     public void setCompilerVersion( String version ) {
         compilerVersion = version;
@@ -57,25 +59,40 @@ public class WasmTask extends AbstractArchiveTask {
 
     /**
      * Get the output format.
+     * 
      * @return the current format
      */
+    @Input
     public OutputFormat getFormat() {
         return format;
     }
 
     /**
-     * Set the compiler output format. Possible values are 'Binary' and 'Text' 
-     * @param format the new format
+     * Set the compiler output format. Possible values are 'Binary' and 'Text'
+     * 
+     * @param format
+     *            the new format
      */
     public void setFormat( OutputFormat format ) {
         this.format = format;
     }
 
+    /**
+     * Generates textual names for function types, globals, labels etc.
+     * 
+     * @return true, if set
+     */
     @Input
     public boolean isDebugNames() {
         return debugNames;
     }
 
+    /**
+     * Generates textual names for function types, globals, labels etc.
+     * 
+     * @param debugNames
+     *            new value
+     */
     public void setDebugNames( boolean debugNames ) {
         this.debugNames = debugNames;
     }

@@ -46,6 +46,8 @@ class WasmCompiler {
 
     private static Method   compileToText;
 
+    private static Method   setProperty;
+
     private WasmTask        task;
 
     private Object          instance;
@@ -87,6 +89,11 @@ class WasmCompiler {
             addFile = getMethod( "addFile", File.class );
             compileToBinary = getMethod( "compileToBinary", File.class );
             compileToText = getMethod( "compileToText", Appendable.class );
+            try {
+                setProperty = getMethod( "setProperty", String.class, String.class );
+            } catch( NoSuchMethodException e ) {
+                // ignore, method does not exist in version 0.1 of the compiler
+            }
         }
         return jWebAssemblyClass;
     }
@@ -127,6 +134,9 @@ class WasmCompiler {
      */
     void compile() {
         try {
+            if( setProperty != null ) {
+                setProperty.invoke( instance, "DebugNames", Boolean.toString( task.isDebugNames() ) );
+            }
             if( task.getFormat() == OutputFormat.Binary ) {
                 compileToBinary.invoke( instance, task.getArchivePath() );
             } else {
