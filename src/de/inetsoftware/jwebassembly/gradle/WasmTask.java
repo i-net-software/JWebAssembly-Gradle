@@ -35,7 +35,14 @@ public class WasmTask extends AbstractArchiveTask {
 
     private String       compilerVersion = "+";
 
-    private OutputFormat format          = OutputFormat.Binary;
+    private OutputFormat format;
+
+    /**
+     * Create instance and set initial values.
+     */
+    public WasmTask() {
+        setFormat( OutputFormat.Binary );
+    }
 
     /**
      * Get the JWasmAssembler compiler version.
@@ -75,6 +82,11 @@ public class WasmTask extends AbstractArchiveTask {
      */
     public void setFormat( OutputFormat format ) {
         this.format = format;
+        if( format == OutputFormat.Binary ) {
+            setExtension( "wasm" );
+        } else {
+            setExtension( "wast" );
+        }
     }
 
     /**
