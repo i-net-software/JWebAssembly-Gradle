@@ -15,7 +15,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'de.inetsoftware:jwebassembly-gradle:+'
+        classpath 'gradle.plugin.de.inetsoftware:jwebassembly-gradle:+'
     }
 }
 
