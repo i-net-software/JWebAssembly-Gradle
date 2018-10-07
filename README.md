@@ -19,7 +19,7 @@ buildscript {
     }
 }
 
-apply plugin: 'de.inetsoftware.jwebassembler'
+apply plugin: 'de.inetsoftware.jwebassembly'
 
 // declare your Java sources like you do it for your other Java projects
 sourceSets {
