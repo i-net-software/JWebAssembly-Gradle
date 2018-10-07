@@ -85,7 +85,7 @@ public class WasmTask extends AbstractArchiveTask {
         if( format == OutputFormat.Binary ) {
             setExtension( "wasm" );
         } else {
-            setExtension( "wast" );
+            setExtension( "wat" ); // The .wast format is a superset of the .wat format that is intended for writing test scripts.
         }
     }
 
