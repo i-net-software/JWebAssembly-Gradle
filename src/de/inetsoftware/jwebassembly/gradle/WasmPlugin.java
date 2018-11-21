@@ -15,6 +15,11 @@
  */
 package de.inetsoftware.jwebassembly.gradle;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -46,6 +51,7 @@ public class WasmPlugin implements Plugin<Project> {
         wasm.setDescription( "Assembles a jar archive containing the main classes." );
         wasm.setGroup( BasePlugin.BUILD_GROUP );
         wasm.from( main.getOutput() );
+        wasm.setClasspath( main.getCompileClasspath() );
 
         // Create dependencies
         wasm.dependsOn( "classes" );

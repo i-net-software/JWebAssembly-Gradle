@@ -48,6 +48,8 @@ class WasmCompiler {
 
     private static Method   setProperty;
 
+    private static Method   addLibrary;
+
     private WasmTask        task;
 
     private Object          instance;
@@ -94,6 +96,11 @@ class WasmCompiler {
             } catch( NoSuchMethodException e ) {
                 // ignore, method does not exist in version 0.1 of the compiler
             }
+            try {
+                addLibrary = getMethod( "addLibrary", File.class );
+            } catch( NoSuchMethodException e ) {
+                // ignore, method does not exist in version 0.1 of the compiler
+            }
         }
         return jWebAssemblyClass;
     }
@@ -114,7 +121,7 @@ class WasmCompiler {
     }
 
     /**
-     * Add a single file to the compiler
+     * Add a single file to the compiler.
      * 
      * @param file
      *            the file
@@ -122,6 +129,26 @@ class WasmCompiler {
     void addFile( @Nonnull File file ) {
         try {
             addFile.invoke( instance, file );
+            task.getLogger().debug( "add file: " + file );
+        } catch( InvocationTargetException ex ) {
+            throw new TaskExecutionException( task, ex.getTargetException() );
+        } catch( Exception ex ) {
+            throw new TaskExecutionException( task, ex );
+        }
+    }
+
+    /**
+     * Add a single file as library to the compiler.
+     * 
+     * @param file
+     *            the file
+     */
+    void addLibrary( @Nonnull File file ) {
+        try {
+            if( addLibrary != null ) {
+                addLibrary.invoke( instance, file );
+                task.getLogger().debug( "add library: " + file );
+            }
         } catch( InvocationTargetException ex ) {
             throw new TaskExecutionException( task, ex.getTargetException() );
         } catch( Exception ex ) {

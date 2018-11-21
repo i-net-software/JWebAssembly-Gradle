@@ -33,5 +33,6 @@ sourceSets {
 wasm {
     format = 'Text'        // possible values are 'Text' and 'Binary'. 'Binary' is the default value.
     compilerVersion = 0.1  // specify a compiler version, default is '+'
+    classpath = files(...) //   specify libraries, default is sourceSet.compileClasspath
 }
 ```

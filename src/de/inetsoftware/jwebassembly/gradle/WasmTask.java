@@ -15,10 +15,14 @@
  */
 package de.inetsoftware.jwebassembly.gradle;
 
+import java.io.File;
+
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.CopyActionProcessingStreamAction;
 import org.gradle.api.internal.file.copy.CopyAction;
 import org.gradle.api.internal.file.copy.CopyActionProcessingStream;
 import org.gradle.api.internal.file.copy.FileCopyDetailsInternal;
+import org.gradle.api.tasks.CompileClasspath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.WorkResult;
 import org.gradle.api.tasks.WorkResults;
@@ -36,6 +40,8 @@ public class WasmTask extends AbstractArchiveTask {
     private String       compilerVersion = "+";
 
     private OutputFormat format;
+
+    private FileCollection classpath;
 
     /**
      * Create instance and set initial values.
@@ -110,6 +116,26 @@ public class WasmTask extends AbstractArchiveTask {
     }
 
     /**
+     * Returns the classpath to use to compile the wasm file.
+     *
+     * @return The classpath.
+     */
+    @CompileClasspath
+    public FileCollection getClasspath() {
+        return classpath;
+    }
+
+    /**
+     * Sets the classpath to use to compile the wasm file.
+     *
+     * @param configuration
+     *            The classpath. Must not be null, but may be empty.
+     */
+    public void setClasspath( FileCollection configuration ) {
+        this.classpath = configuration;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -130,6 +156,14 @@ public class WasmTask extends AbstractArchiveTask {
                     }
 
                 } );
+
+                for( File file : getClasspath().getFiles() ) {
+                    String name = file.getName().toLowerCase();
+                    if( name.endsWith( ".jar" ) || name.endsWith( ".zip" ) ) {
+                        compiler.addLibrary( file );
+                    }
+                }
+
                 compiler.compile();
                 return WorkResults.didWork( true );
             }
