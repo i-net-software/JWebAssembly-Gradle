@@ -61,7 +61,7 @@ public class WasmTask extends AbstractArchiveTask {
     }
 
     /**
-     * Set the JWasmAssembler compiler version.
+     * Set the JWasmAssembler compiler version. This can be value like '+', '0.1' or 'com.github.i-net-software:jwebassembly:master-SNAPSHOT'.
      * 
      * @param version
      *            the new version

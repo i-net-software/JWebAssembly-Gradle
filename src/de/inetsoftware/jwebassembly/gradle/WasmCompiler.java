@@ -77,7 +77,11 @@ class WasmCompiler {
         if( jWebAssemblyClass == null ) {
             Project project = task.getProject();
 
-            project.getDependencies().add( WasmPlugin.CONFIGURATION_NAME, "de.inetsoftware:jwebassembly-compiler:" + task.getCompilerVersion() );
+            String compilerDependency = task.getCompilerVersion();
+            if( compilerDependency == null || !compilerDependency.contains( ":" ) ) {
+                compilerDependency = "de.inetsoftware:jwebassembly-compiler:" + compilerDependency; 
+            }
+            project.getDependencies().add( WasmPlugin.CONFIGURATION_NAME, compilerDependency );
             Configuration config = project.getConfigurations().getByName( WasmPlugin.CONFIGURATION_NAME );
             ArrayList<URL> urls = new ArrayList<>();
             for( File file : config.getFiles() ) {
