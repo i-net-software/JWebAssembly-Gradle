@@ -50,7 +50,7 @@ public class WasmPlugin implements Plugin<Project> {
         WasmTask wasm = project.getTasks().create( "wasm", WasmTask.class );
         wasm.setDescription( "Assembles a jar archive containing the main classes." );
         wasm.setGroup( BasePlugin.BUILD_GROUP );
-        wasm.from( main.getOutput() );
+        wasm.from( main.getOutput().getClassesDirs() ); // only classes, not resources
         wasm.setClasspath( main.getCompileClasspath() );
 
         // Create dependencies
