@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.logging.LogLevel;
 import org.gradle.api.tasks.TaskExecutionException;
 
 /**
@@ -105,6 +106,30 @@ class WasmCompiler {
             } catch( NoSuchMethodException e ) {
                 // ignore, method does not exist in version 0.1 of the compiler
             }
+            try {
+                java.util.logging.Logger wasmLogger = (java.util.logging.Logger)jWebAssemblyClass.getField( "LOGGER" ).get( null );
+                LogLevel level = task.getLogging().getLevel();
+                if( level != null ) {
+                    switch( level ) {
+                        case DEBUG:
+                            wasmLogger.setLevel( java.util.logging.Level.FINEST );
+                            break;
+                        case INFO:
+                            wasmLogger.setLevel( java.util.logging.Level.INFO );
+                            break;
+                        case WARN:
+                        case QUIET:
+                            wasmLogger.setLevel( java.util.logging.Level.WARNING );
+                            break;
+                        case ERROR:
+                            wasmLogger.setLevel( java.util.logging.Level.SEVERE );
+                            break;
+                    }
+                }
+            } catch( NoSuchFieldException e ) {
+                // ignore, method does not exist in version 0.1 of the compiler
+            }
+
         }
         return jWebAssemblyClass;
     }
