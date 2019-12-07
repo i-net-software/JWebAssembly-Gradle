@@ -17,6 +17,7 @@ package de.inetsoftware.jwebassembly.gradle;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -39,21 +40,23 @@ import org.gradle.api.tasks.TaskExecutionException;
  */
 class WasmCompiler {
 
-    private static Class<?> jWebAssemblyClass;
+    private URLClassLoader classLoader;
 
-    private static Method   addFile;
+    private Class<?> jWebAssemblyClass;
 
-    private static Method   compileToBinary;
+    private Method   addFile;
 
-    private static Method   compileToText;
+    private Method   compileToBinary;
 
-    private static Method   setProperty;
+    private Method   compileToText;
 
-    private static Method   addLibrary;
+    private Method   setProperty;
 
-    private WasmTask        task;
+    private Method   addLibrary;
 
-    private Object          instance;
+    private WasmTask task;
+
+    private Object   instance;
 
     /**
      * Create a new instance of the compiler. To download the right version this must occur lazy after the
@@ -89,9 +92,9 @@ class WasmCompiler {
                 task.getLogger().lifecycle( "\tcompiler: " + file.getName() );
                 urls.add( file.toURI().toURL() );
             }
-            URLClassLoader cl = new URLClassLoader( urls.toArray( new URL[0] ) );
+            classLoader = new URLClassLoader( urls.toArray( new URL[0] ) );
 
-            jWebAssemblyClass = cl.loadClass( "de.inetsoftware.jwebassembly.JWebAssembly" );
+            jWebAssemblyClass = classLoader.loadClass( "de.inetsoftware.jwebassembly.JWebAssembly" );
 
             addFile = getMethod( "addFile", File.class );
             compileToBinary = getMethod( "compileToBinary", File.class );
@@ -143,7 +146,7 @@ class WasmCompiler {
      *            the parameters
      * @return the requested method
      */
-    private static Method getMethod( String name, Class<?>... parameterTypes ) throws Exception {
+    private Method getMethod( String name, Class<?>... parameterTypes ) throws Exception {
         Method method = jWebAssemblyClass.getMethod( name, parameterTypes );
         method.setAccessible( true );
         return method;
@@ -207,6 +210,14 @@ class WasmCompiler {
             throw new TaskExecutionException( task, targetException );
         } catch( Exception ex ) {
             throw new TaskExecutionException( task, ex );
+        } finally {
+            if( classLoader != null ) {
+                try {
+                    classLoader.close();
+                } catch( IOException ex ) {
+                    // ignore
+                }
+            }
         }
     }
 }
