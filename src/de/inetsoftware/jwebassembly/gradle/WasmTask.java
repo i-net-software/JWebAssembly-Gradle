@@ -41,6 +41,8 @@ public class WasmTask extends AbstractArchiveTask {
 
     private OutputFormat format;
 
+    private String       sourceMapBase = "";
+
     private FileCollection classpath;
 
     /**
@@ -113,6 +115,27 @@ public class WasmTask extends AbstractArchiveTask {
      */
     public void setDebugNames( boolean debugNames ) {
         this.debugNames = debugNames;
+    }
+
+    /**
+     * Get the source files location.
+     * 
+     * @return current location
+     */
+    @Input
+    public String getSourceMapBase() {
+        return sourceMapBase;
+    }
+
+    /**
+     * Property for an absolute or relative path between the final wasm file location and the source files location.
+     * If not empty it should end with a slash like "../../src/main/java/".
+     * 
+     * @param sourceMapBase
+     *            new value
+     */
+    public void setSourceMapBase( String sourceMapBase ) {
+        this.sourceMapBase = sourceMapBase;
     }
 
     /**

@@ -195,6 +195,7 @@ class WasmCompiler {
         try {
             if( setProperty != null ) {
                 setProperty.invoke( instance, "DebugNames", Boolean.toString( task.isDebugNames() ) );
+                setProperty.invoke( instance, "SourceMapBase", task.getSourceMapBase() );
             }
             if( task.getFormat() == OutputFormat.Binary ) {
                 compileToBinary.invoke( instance, task.getArchivePath() );
