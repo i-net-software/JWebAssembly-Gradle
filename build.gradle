@@ -1,5 +1,5 @@
 plugins {
-  id "com.gradle.plugin-publish" version "0.10.0"
+  id "com.gradle.plugin-publish" version "0.10.1"
 }
 
 
@@ -8,7 +8,7 @@ apply plugin: 'maven'
 
 group 'de.inetsoftware'
 archivesBaseName = 'jwebassembly-gradle'
-version = '0.1'
+version = '0.2'
 
 dependencies {
     compile gradleApi()
