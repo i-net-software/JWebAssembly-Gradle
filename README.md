@@ -2,6 +2,7 @@ JWebAssembly Gradle Plugin
 ======
 
 [![License](https://img.shields.io/github/license/i-net-software/jwebassembly-gradle.svg)](https://github.com/i-net-software/jwebassembly/blob/master/LICENSE.txt)
+[![Maven metadata URL](https://img.shields.io/maven-metadata/v?label=Plugin&metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fm2%2Fde%2Finetsoftware%2Fjwebassembly%2Fde.inetsoftware.jwebassembly.gradle.plugin%2Fmaven-metadata.xml)](https://plugins.gradle.org/plugin/de.inetsoftware.jwebassembly)
 
 This is a Gradle plugin for the [JWebAssembly](https://github.com/i-net-software/JWebAssembly) compiler. A Java to [WebAssembly](http://webassembly.org/) converter.
 
