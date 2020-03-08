@@ -55,8 +55,8 @@ eclipse {
 pluginBundle {
     website = 'https://github.com/i-net-software/JWebAssembly-Gradle'
     vcsUrl = 'https://github.com/i-net-software/JWebAssembly-Gradle'
-    description = 'A Gradle plugin for the JWebAssembly compiler.'
-    tags = ['jwebassembler', 'webassembler', 'wasm' ]
+    description = 'A Gradle plugin for the JWebAssembly compiler. A Java bytecode to WebAssembly converter. It produce the WASM and JavaScript file from your *.java, *.class and/or *.jar files.'
+    tags = ['jwebassembly', 'webassembly', 'wasm', 'java', 'bytecode', 'compile', 'converter', 'transpiler' ]
 
     plugins {
         jwebassemblerPlugin {
