@@ -37,3 +37,5 @@ wasm {
     classpath = files(...) // specify libraries, default is sourceSet.compileClasspath
 }
 ```
+
+For a more [completely description](https://github.com/i-net-software/JWebAssembly/wiki/Build-with-Gradle) look into the wiki documentation.
