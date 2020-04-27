@@ -16,6 +16,8 @@
 package de.inetsoftware.jwebassembly.gradle;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.CopyActionProcessingStreamAction;
@@ -35,13 +37,11 @@ import org.gradle.api.tasks.bundling.AbstractArchiveTask;
  */
 public class WasmTask extends AbstractArchiveTask {
 
-    private boolean      debugNames;
-
     private String       compilerVersion = "+";
 
     private OutputFormat format;
 
-    private String       sourceMapBase = "";
+    private final Map<String,String> props = new HashMap<>();
 
     private FileCollection classpath;
 
@@ -104,7 +104,7 @@ public class WasmTask extends AbstractArchiveTask {
      */
     @Input
     public boolean isDebugNames() {
-        return debugNames;
+        return Boolean.parseBoolean( getProperty( "DebugNames" ) );
     }
 
     /**
@@ -114,7 +114,7 @@ public class WasmTask extends AbstractArchiveTask {
      *            new value
      */
     public void setDebugNames( boolean debugNames ) {
-        this.debugNames = debugNames;
+        setProperty( "DebugNames", Boolean.toString( debugNames ) );
     }
 
     /**
@@ -124,7 +124,7 @@ public class WasmTask extends AbstractArchiveTask {
      */
     @Input
     public String getSourceMapBase() {
-        return sourceMapBase;
+        return getProperty( "SourceMapBase" );
     }
 
     /**
@@ -135,7 +135,42 @@ public class WasmTask extends AbstractArchiveTask {
      *            new value
      */
     public void setSourceMapBase( String sourceMapBase ) {
-        this.sourceMapBase = sourceMapBase;
+        setProperty( "SourceMapBase", sourceMapBase );
+    }
+
+    /**
+     * Get all properties
+     * 
+     * @return the properties container
+     */
+    @Input
+    public Map<String, String> getProperties() {
+        return props;
+    }
+
+    /**
+     * Get a property of the compiler
+     * 
+     * @return the property value
+     */
+    public String getProperty( String key ) {
+        return props.get( key );
+    }
+
+    /**
+     * Set a property for the compiler. See the compiler documentation of the used version for details.
+     * 
+     * @param key
+     *            the property key
+     * @param value
+     *            the value
+     */
+    public void setProperty( String key, String value ) {
+        if( value != null ) {
+            props.put( key, value );
+        } else {
+            props.remove( key );
+        }
     }
 
     /**

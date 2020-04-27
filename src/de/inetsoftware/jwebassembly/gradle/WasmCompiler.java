@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -194,8 +195,9 @@ class WasmCompiler {
     void compile() {
         try {
             if( setProperty != null ) {
-                setProperty.invoke( instance, "DebugNames", Boolean.toString( task.isDebugNames() ) );
-                setProperty.invoke( instance, "SourceMapBase", task.getSourceMapBase() );
+                for( Map.Entry<String, String> entry : task.getProperties().entrySet() ) {
+                    setProperty.invoke( instance, entry.getKey(), entry.getValue() );
+                }
             }
             if( task.getFormat() == OutputFormat.Binary ) {
                 compileToBinary.invoke( instance, task.getArchivePath() );
