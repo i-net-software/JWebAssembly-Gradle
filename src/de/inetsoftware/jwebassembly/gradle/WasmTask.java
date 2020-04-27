@@ -124,7 +124,8 @@ public class WasmTask extends AbstractArchiveTask {
      */
     @Input
     public String getSourceMapBase() {
-        return getProperty( "SourceMapBase" );
+        String str = getProperty( "SourceMapBase" );
+        return str == null ? "" : str;
     }
 
     /**
