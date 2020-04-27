@@ -8,7 +8,7 @@ apply plugin: 'maven'
 
 group 'de.inetsoftware'
 archivesBaseName = 'jwebassembly-gradle'
-version = '0.2'
+version = '0.3'
 
 dependencies {
     compile gradleApi()
