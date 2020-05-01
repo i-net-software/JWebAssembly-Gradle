@@ -152,6 +152,8 @@ public class WasmTask extends AbstractArchiveTask {
     /**
      * Get a property of the compiler
      * 
+     * @param key
+     *            the name of the property
      * @return the property value
      */
     public String getProperty( String key ) {
