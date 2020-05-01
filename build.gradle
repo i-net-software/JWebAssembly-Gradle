@@ -62,6 +62,7 @@ pluginBundle {
         jwebassemblerPlugin {
             id = 'de.inetsoftware.jwebassembly'
             displayName = 'Gradle JWebAssembly plugin'
+            tags = ['jwebassembly', 'webassembly', 'wasm', 'java', 'bytecode', 'compile', 'converter', 'transpiler' ]
         }
     }
     mavenCoordinates {
