@@ -219,10 +219,7 @@ public class WasmTask extends AbstractArchiveTask {
                 } );
 
                 for( File file : getClasspath().getFiles() ) {
-                    String name = file.getName().toLowerCase();
-                    if( name.endsWith( ".jar" ) || name.endsWith( ".zip" ) ) {
-                        compiler.addLibrary( file );
-                    }
+                    compiler.addLibrary( file );
                 }
 
                 compiler.compile();
