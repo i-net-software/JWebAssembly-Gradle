@@ -13,7 +13,7 @@ This plugin use the Java plugin to compile your Java sources to class files firs
 ```gradle
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'gradle.plugin.de.inetsoftware:jwebassembly-gradle:+'
