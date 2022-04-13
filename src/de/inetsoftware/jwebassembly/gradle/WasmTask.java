@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Volker Berlin (i-net software)
+ * Copyright 2018 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,9 +91,9 @@ public class WasmTask extends AbstractArchiveTask {
     public void setFormat( OutputFormat format ) {
         this.format = format;
         if( format == OutputFormat.Binary ) {
-            setExtension( "wasm" );
+            getArchiveExtension().set( "wasm" );
         } else {
-            setExtension( "wat" ); // The .wast format is a superset of the .wat format that is intended for writing test scripts.
+            getArchiveExtension().set( "wat" ); // The .wast format is a superset of the .wat format that is intended for writing test scripts.
         }
     }
 

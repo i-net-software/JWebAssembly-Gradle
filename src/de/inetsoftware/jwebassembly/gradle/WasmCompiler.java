@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Volker Berlin (i-net software)
+ * Copyright 2018 - 2022 Volker Berlin (i-net software)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -200,9 +200,9 @@ class WasmCompiler {
                 }
             }
             if( task.getFormat() == OutputFormat.Binary ) {
-                compileToBinary.invoke( instance, task.getArchivePath() );
+                compileToBinary.invoke( instance, task.getArchiveFile().get().getAsFile() );
             } else {
-                try (OutputStreamWriter output = new OutputStreamWriter( new FileOutputStream( task.getArchivePath() ), StandardCharsets.UTF_8 )) {
+                try (OutputStreamWriter output = new OutputStreamWriter( new FileOutputStream( task.getArchiveFile().get().getAsFile() ), StandardCharsets.UTF_8 )) {
                     compileToText.invoke( instance, output );
                 }
             }
