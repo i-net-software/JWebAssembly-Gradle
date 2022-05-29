@@ -130,6 +130,7 @@ class WasmCompiler {
                             break;
                     }
                 }
+                wasmLogger.fine( "\tcompiler: " + urls );
             } catch( NoSuchFieldException e ) {
                 // ignore, method does not exist in version 0.1 of the compiler
             }
